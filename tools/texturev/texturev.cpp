@@ -522,7 +522,7 @@ void associate()
 	bx::Error err;
 	if (bx::open(&writer, temp, false, &err) )
 	{
-		bx::write(&writer, str.c_str(), str.length(), &err);
+		bx::write(&writer, str.c_str(), (int32_t)str.length(), &err);
 		bx::close(&writer);
 
 		if (err.isOk() )

@@ -2298,10 +2298,12 @@ tinfl_status tinfl_decompress(tinfl_decompressor *r,
     TINFL_GET_BYTE(2, r->m_zhdr1);
     counter = (((r->m_zhdr0 * 256 + r->m_zhdr1) % 31 != 0) ||
                (r->m_zhdr1 & 32) || ((r->m_zhdr0 & 15) != 8));
-    if (!(decomp_flags & TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF))
-      counter |= (((1U << (8U + (r->m_zhdr0 >> 4))) > 32768U) ||
-                  ((out_buf_size_mask + 1) <
-                   (size_t)(1U << (8U + (r->m_zhdr0 >> 4)))));
+	if (!(decomp_flags & TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF))
+	{
+		counter |= (size_t)(((1U << (8ULL + (r->m_zhdr0 >> 4U))) > 32768U) ||
+			((out_buf_size_mask + 1U) <
+			(size_t)((size_t)1U << (size_t)(8ULL + (r->m_zhdr0 >> 4U)))));
+	}
     if (counter) {
       TINFL_CR_RETURN_FOREVER(36, TINFL_STATUS_FAILED);
     }
