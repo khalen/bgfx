@@ -6,6 +6,7 @@
 project "geometryc"
 	uuid "8794dc3a-2d57-11e2-ba18-368d09e48fda"
 	kind "ConsoleApp"
+    targetdir (BGFX_BIN_DIR)
 
 	includedirs {
 		path.join(BX_DIR, "include"),

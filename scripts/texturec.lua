@@ -6,6 +6,7 @@
 project "texturec"
 	uuid "838801ee-7bc3-11e1-9f19-eae7d36e7d26"
 	kind "ConsoleApp"
+    targetdir (BGFX_BIN_DIR)
 
 	includedirs {
 		path.join(BX_DIR, "include"),

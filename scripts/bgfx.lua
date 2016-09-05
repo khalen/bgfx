@@ -3,13 +3,14 @@
 -- License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
 --
 
-function bgfxProject(_name, _kind, _defines)
+function bgfxProject(_name, _kind, _defines, _bindir, _libdir)
 
 	project ("bgfx" .. _name)
 		uuid (os.uuid("bgfx" .. _name))
 		kind (_kind)
 
 		if _kind == "SharedLib" then
+            targetdir (_bindir)
 			defines {
 				"BGFX_SHARED_LIB_BUILD=1",
 			}
@@ -32,6 +33,10 @@ function bgfxProject(_name, _kind, _defines)
 
 			configuration {}
 		end
+
+        if _kind == "StaticLib" then
+            targetdir (_libdir)
+        end
 
 		includedirs {
 			path.join(BGFX_DIR, "3rdparty"),

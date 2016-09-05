@@ -6,6 +6,7 @@
 project "shaderc"
 	uuid "f3cd2e90-52a4-11e1-b86c-0800200c9a66"
 	kind "ConsoleApp"
+    targetdir (BGFX_BIN_DIR)
 
 	local GLSL_OPTIMIZER = path.join(BGFX_DIR, "3rdparty/glsl-optimizer")
 	local FCPP_DIR = path.join(BGFX_DIR, "3rdparty/fcpp")

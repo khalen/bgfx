@@ -1,6 +1,7 @@
 project ("texturev")
 	uuid (os.uuid("texturev") )
 	kind "ConsoleApp"
+    targetdir (BGFX_BIN_DIR)
 
 	configuration {}
 

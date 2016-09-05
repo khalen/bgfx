@@ -55,10 +55,10 @@ solution "bgfx"
 		}
 	else
 		platforms {
-			"x32",
+--          "x32",
 			"x64",
 --			"Xbox360",
-			"Native", -- for targets where bitness is not specified
+--			"Native", -- for targets where bitness is not specified
 		}
 	end
 
@@ -71,6 +71,14 @@ BX_DIR     = os.getenv("BX_DIR")
 
 local BGFX_BUILD_DIR = path.join(BGFX_DIR, ".build")
 local BGFX_THIRD_PARTY_DIR = path.join(BGFX_DIR, "3rdparty")
+BGFX_BIN_DIR = path.join(BGFX_DIR, "../../bin")
+BGFX_LIB_DIR = path.join(BGFX_DIR, "../../lib")
+
+libdirs {
+    BGFX_LIB_DIR,
+    path.join( BGFX_THIRD_PARTY_DIR, "lib" )
+}
+
 if not BX_DIR then
 	BX_DIR = path.getabsolute(path.join(BGFX_DIR, "../bx"))
 end
@@ -123,6 +131,7 @@ function exampleProject(_name)
 		path.join(BX_DIR,   "include"),
 		path.join(BGFX_DIR, "include"),
 		path.join(BGFX_DIR, "3rdparty"),
+		path.join(BGFX_DIR, "3rdparty/include"),
 		path.join(BGFX_DIR, "examples/common"),
 	}
 
@@ -187,6 +196,8 @@ function exampleProject(_name)
 	end
 
 	configuration { "vs*", "x32 or x64" }
+        targetdir( BGFX_BIN_DIR )
+
 		linkoptions {
 			"/ignore:4199", -- LNK4199: /DELAYLOAD:*.dll ignored; no imports found from *.dll
 		}
@@ -357,51 +368,52 @@ dofile "bgfx.lua"
 
 group "examples"
 dofile "example-common.lua"
+exampleCommon(BGFX_LIB_DIR)
 
 group "libs"
-bgfxProject("", "StaticLib", {})
+bgfxProject("", "StaticLib", {}, BGFX_BIN_DIR, BGFX_LIB_DIR)
 
 group "examples"
 exampleProject("00-helloworld")
-exampleProject("01-cubes")
-exampleProject("02-metaballs")
-exampleProject("03-raymarch")
-exampleProject("04-mesh")
-exampleProject("05-instancing")
-exampleProject("06-bump")
-exampleProject("07-callback")
-exampleProject("08-update")
-exampleProject("09-hdr")
-exampleProject("10-font")
-exampleProject("11-fontsdf")
-exampleProject("12-lod")
-exampleProject("13-stencil")
-exampleProject("14-shadowvolumes")
-exampleProject("15-shadowmaps-simple")
-exampleProject("16-shadowmaps")
-exampleProject("17-drawstress")
-exampleProject("18-ibl")
-exampleProject("19-oit")
-exampleProject("20-nanovg")
-exampleProject("21-deferred")
-exampleProject("22-windows")
-exampleProject("23-vectordisplay")
-exampleProject("24-nbody")
-exampleProject("26-occlusion")
-exampleProject("27-terrain")
-exampleProject("28-wireframe")
-exampleProject("29-debugdraw")
-exampleProject("30-picking")
-exampleProject("31-rsm")
-
+-- exampleProject("01-cubes")
+-- exampleProject("02-metaballs")
+-- exampleProject("03-raymarch")
+-- exampleProject("04-mesh")
+-- exampleProject("05-instancing")
+-- exampleProject("06-bump")
+-- exampleProject("07-callback")
+-- exampleProject("08-update")
+-- exampleProject("09-hdr")
+-- exampleProject("10-font")
+-- exampleProject("11-fontsdf")
+-- exampleProject("12-lod")
+-- exampleProject("13-stencil")
+-- exampleProject("14-shadowvolumes")
+-- exampleProject("15-shadowmaps-simple")
+-- exampleProject("16-shadowmaps")
+-- exampleProject("17-drawstress")
+-- exampleProject("18-ibl")
+-- exampleProject("19-oit")
+-- exampleProject("20-nanovg")
+-- exampleProject("21-deferred")
+-- exampleProject("22-windows")
+-- exampleProject("23-vectordisplay")
+-- exampleProject("24-nbody")
+-- exampleProject("26-occlusion")
+-- exampleProject("27-terrain")
+-- exampleProject("28-wireframe")
+-- exampleProject("29-debugdraw")
+-- exampleProject("30-picking")
+-- exampleProject("31-rsm")
+ 
 -- C99 source doesn't compile under WinRT settings
-if not premake.vstudio.iswinrt() then
-	exampleProject("25-c99")
-end
+-- if not premake.vstudio.iswinrt() then
+-- 	exampleProject("25-c99")
+-- end
 
 if _OPTIONS["with-shared-lib"] then
 	group "libs"
-	bgfxProject("-shared-lib", "SharedLib", {})
+	bgfxProject("-shared-lib", "SharedLib", {}, BGFX_BIN_DIR, BGFX_LIB_DIR)
 end
 
 if _OPTIONS["with-tools"] then
