@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Branimir Karadzic. All rights reserved.
+ * Copyright 2011-2017 Branimir Karadzic. All rights reserved.
  * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
  */
 
@@ -90,7 +90,7 @@ inline void mtxProj(float* _result, float _fovy, float _aspect, float _near, flo
 
 void screenSpaceQuad(float _textureWidth, float _textureHeight, bool _originBottomLeft = false, float _width = 1.0f, float _height = 1.0f)
 {
-	if (bgfx::checkAvailTransientVertexBuffer(3, PosColorTexCoord0Vertex::ms_decl) )
+	if (3 == bgfx::getAvailTransientVertexBuffer(3, PosColorTexCoord0Vertex::ms_decl) )
 	{
 		bgfx::TransientVertexBuffer vb;
 		bgfx::allocTransientVertexBuffer(&vb, 3, PosColorTexCoord0Vertex::ms_decl);
@@ -382,7 +382,7 @@ class ExampleOIT : public entry::AppI
 						if (m_fadeInOut
 						&&  zz == 1)
 						{
-							color[3] = sinf(time*3.0f)*0.49f+0.5f;
+							color[3] = bx::fsin(time*3.0f)*0.49f+0.5f;
 						}
 
 						bgfx::setUniform(u_color, color);

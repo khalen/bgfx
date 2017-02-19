@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Branimir Karadzic. All rights reserved.
+ * Copyright 2011-2017 Branimir Karadzic. All rights reserved.
  * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
  */
 
@@ -199,9 +199,9 @@ class ExampleInstancing : public entry::AppI
 							mtx[14] = 0.0f;
 
 							float* color = (float*)&data[64];
-							color[0] = sinf(time+float(xx)/11.0f)*0.5f+0.5f;
-							color[1] = cosf(time+float(yy)/11.0f)*0.5f+0.5f;
-							color[2] = sinf(time*3.0f)*0.5f+0.5f;
+							color[0] = bx::fsin(time+float(xx)/11.0f)*0.5f+0.5f;
+							color[1] = bx::fcos(time+float(yy)/11.0f)*0.5f+0.5f;
+							color[2] = bx::fsin(time*3.0f)*0.5f+0.5f;
 							color[3] = 1.0f;
 
 							data += instanceStride;
